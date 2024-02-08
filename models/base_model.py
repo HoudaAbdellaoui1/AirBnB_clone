@@ -8,8 +8,8 @@ class BaseModel:
 
     def __init__(self):
         """Initialize a new instance of BaseModel."""
-        self.created_at = datetime.now()  #Set creation time
-        self.updated_at = datetime.now()  #Set update time
+        self.created_at = datetime.now()  # Set creation time
+        self.updated_at = datetime.now()  # Set update time
         self.id = str(uuid.uuid4())  # Assign a unique ID
 
     def save(self):
