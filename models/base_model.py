@@ -56,7 +56,6 @@ class BaseModel:
         """
         dict_copy = self.__dict__.copy()
         dict_copy["__class__"] = str(type(self).__name__)
-        # Convert datetime objects to ISO format strings
         dict_copy['created_at'] = self.created_at.isoformat()
         dict_copy['updated_at'] = self.updated_at.isoformat()
         if dict_copy.get('_sa_instance_state'):
