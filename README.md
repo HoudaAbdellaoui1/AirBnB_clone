@@ -16,5 +16,5 @@ The command interpreter is a simple program that allows you to interact with the
 To start the command interpreter, simply run the following command in your terminal:<b>./console.py</b>
 
 ## Authors
-ABDELLAOUI Houda <b>abdellaouihouda2@gmail.com</b>
-ARDAD Halima
+- ABDELLAOUI Houda <b>abdellaouihouda2@gmail.com</b>
+- ARDAD Halima
