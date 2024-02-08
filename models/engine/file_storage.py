@@ -31,13 +31,10 @@ class FileStorage:
         If the JSON file exists, it loads the data into __objects.
         Otherwise, do nothing.
         """
-        if path.exists(self.__file_path):
-            with open(self.__file_path, 'r') as f:
-                data = json.load(f)
-                for key, obj_data in data.items():
-                    class_name, obj_id = key.split('.')
-                    # Dynamically create an instance of the class based on class name
-                    cls = globals()[class_name]
-                    # Create an instance of the class and initialize its attributes
-                    obj_instance = cls(**obj_data)
-                    self.__objects[key] = obj_instance
+        try:
+            with open(self.__file_path, 'r', encoding="UTF-8") as f:
+                for key, value in (json.load(f)).items():
+                    value = eval(value["__class__"])(**value)
+                    self.__objects[key] = value
+        except FileNotFoundError:
+            pass
