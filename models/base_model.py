@@ -35,4 +35,4 @@ class BaseModel:
         Returns:
             str: String representation of the object.
         """
-        return f"[{self.__class__.__name__}] ({self.id}) {self.to_dict()}"
+        return f"[{self.__class__.__name__}] {self.to_dict()} ({self.id})"
