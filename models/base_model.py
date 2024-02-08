@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 import uuid
 from datetime import datetime
-
+from models import storage
 
 class BaseModel:
     """A base model class providing common attributes and methods.
@@ -25,26 +25,27 @@ class BaseModel:
             created_at: creation date
             updated_at: updated date
         """
+        """Initialize a new instance of BaseModel."""
         if kwargs:
             for key, value in kwargs.items():
-                if key == "created_at" or key == "updated_at":
-                    value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
-                if key != "__class__":
-                    setattr(self, key, value)
+                # Skip __class__ attribute
+                if key == '__class__':
+                    continue
+                setattr(self, key, value)
+            if 'created_at' in kwargs:
+                self.created_at = datetime.strptime(kwargs['created_at'], '%Y-%m-%dT%H:%M:%S.%f')
+            if 'updated_at' in kwargs:
+                self.updated_at = datetime.strptime(kwargs['updated_at'], '%Y-%m-%dT%H:%M:%S.%f')
         else:
             self.id = str(uuid.uuid4())
-            self.created_at = self.updated_at = datetime.now()
-        if not self.id:
-            self.id = str(uuid.uuid4())
-        d = datetime.now()
-        if not self.created_at:
-            self.created_at = self.updated_at = d
-        if not self.updated_at:
-            self.updated_at = d
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
+            storage.new(self)
 
     def save(self):
         """Update the 'updated_at' attribute with the current datetime."""
         self.updated_at = datetime.now()
+        storage.save()
 
     def to_dict(self):
         """
