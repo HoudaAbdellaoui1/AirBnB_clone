@@ -4,13 +4,43 @@ from datetime import datetime
 
 
 class BaseModel:
-    """A base model class providing common attributes and methods."""
+    """A base model class providing common attributes and methods.
 
-    def __init__(self):
-        """Initialize a new instance of BaseModel."""
-        self.created_at = datetime.now()  # Set creation time
-        self.updated_at = datetime.now()  # Set update time
-        self.id = str(uuid.uuid4())  # Assign a unique ID
+     Attributes:
+        id: unique ID
+        created_at: creation time
+        updated_at: update time
+    """
+    id = str(uuid.uuid4())
+    created_at = datetime.now()
+    updated_at = datetime.now()
+    
+    def __init__(self, *args, **kwargs):
+        """Initialize a new instance of BaseModel.
+        Args:
+            args: unused param
+            kwargs: arguments for BaseModel constructor
+        Attributes:
+            id: unique id generated
+            created_at: creation date
+            updated_at: updated date
+        """
+        if kwargs:
+            for key, value in kwargs.items():
+                if key == "created_at" or key == "updated_at":
+                    value = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
+                if key != "__class__":
+                    setattr(self, key, value)
+        else:
+            self.id = str(uuid.uuid4())
+            self.created_at = self.updated_at = datetime.now()
+        if not self.id:
+            self.id = str(uuid.uuid4())
+        d = datetime.now()
+        if not self.created_at:
+            self.created_at = self.updated_at = d
+        if not self.updated_at:
+            self.updated_at = d
 
     def save(self):
         """Update the 'updated_at' attribute with the current datetime."""
@@ -36,4 +66,4 @@ class BaseModel:
         Returns:
             str: String representation of the object.
         """
-        return f"[{self.__class__.__name__}] {self.to_dict()} ({self.id})"
+        return f"[{self.__class__.__name__}] ({self.id}) {self.to_dict()}"
