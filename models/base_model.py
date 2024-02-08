@@ -58,8 +58,8 @@ class BaseModel:
         # Convert datetime objects to ISO format strings
         dict_copy['created_at'] = self.created_at.isoformat()
         dict_copy['updated_at'] = self.updated_at.isoformat()
-        if my_dict.get('_sa_instance_state'):
-            del my_dict['_sa_instance_state']
+        if dict_copy.get('_sa_instance_state'):
+            del dict_copy['_sa_instance_state']
         return dict_copy
 
     def __str__(self):
