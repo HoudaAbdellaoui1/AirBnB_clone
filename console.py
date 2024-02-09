@@ -1,5 +1,5 @@
+#!/usr/bin/python3
 import cmd
-
 
 class HBNBCommand(cmd.Cmd):
     """
@@ -33,7 +33,7 @@ class HBNBCommand(cmd.Cmd):
         Returns:
             bool: True to exit the program.
         """
-        print()  # Print a newline before exiting
+        print()
         return True
 
     def emptyline(self):
