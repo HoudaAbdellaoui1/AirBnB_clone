@@ -47,7 +47,7 @@ class HBNBCommand(cmd.Cmd):
     def validate(self, arg):
         """validate parameter and returns 
         either None or a tuple"""
-        
+
         if "=" not in arg:
             return None
 
@@ -63,41 +63,33 @@ class HBNBCommand(cmd.Cmd):
 
         return param, value
 
-    def do_show(self, arg):
-        """
-        Prints the string representation of an instance based on the class name and id.
-
+    def do_show(self, line):
+        """Prints the string representation of an instance.
         Args:
-            arg (str): The arguments passed with the command.
-
-        Usage:
-            show <class name> <id>
+            line (str): The arguments passed with the command.
         """
-        args = arg.split()
-        if not arg:
-            print("** class name missing **")
-            return
-
         try:
-            class_name = args[0]
-            if class_name not in storage.all():
-                print("** class doesn't exist **")
-                return
-        except IndexError:
-            print("** class name missing **")
-            return
+            if not line:
+                raise SyntaxError("** class name missing **")
 
-        try:
-            obj_id = args[1]
+            class_name, obj_id = line.split(" ")
+            objects = storage.all(eval(class_name))
+            key = f"{class_name}.{obj_id}"
+
+            if key not in objects:
+                raise KeyError("** no instance found **")
+
+            print(objects[key])
+
+        except SyntaxError as se:
+            print(se)
+        except NameError:
+            print("** class doesn't exist **")
         except IndexError:
             print("** instance id missing **")
-            return
+        except KeyError as ke:
+            print(ke)
 
-        key = class_name + "." + obj_id
-        if key in storage.all():
-            print(storage.all()[key])
-        else:
-            print("** no instance found **")
 
     def do_destroy(self, arg):
         """
