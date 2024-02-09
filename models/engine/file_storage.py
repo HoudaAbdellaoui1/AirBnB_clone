@@ -3,7 +3,11 @@ import json
 from os import path
 from models.base_model import BaseModel
 from models.user import User
-
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 
 class FileStorage:
     """Class for serializing instances to a JSON file
@@ -11,16 +15,14 @@ class FileStorage:
 
     __file_path = "file.json"
     __objects = {}
-    # __classDictionary = {
-    #     "User": User,
-    #     "State": State,
-    #     "City": City,
-    #     "Amenity": Amenity,
-    #     "Place": Place,
-    #     "Review": Review
-    # }
     __classDictionary = {
+        "BaseModel": BaseModel,
         "User": User,
+        "State": State,
+        "City": City,
+        "Amenity": Amenity,
+        "Place": Place,
+        "Review": Review
     }
 
     def all(self, cl=None):
