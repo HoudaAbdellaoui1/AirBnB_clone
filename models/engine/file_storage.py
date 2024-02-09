@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 import json
-from os import path
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -15,23 +14,17 @@ class FileStorage:
 
     __file_path = "file.json"
     __objects = {}
-    __classDictionary = {
-        "BaseModel": BaseModel,
-        "User": User,
-        "State": State,
-        "City": City,
-        "Amenity": Amenity,
-        "Place": Place,
-        "Review": Review
-    }
+    __classDictionary = {}
 
-    def all(self, cl=None):
-        """Returns the dictionary __objects."""
-        cl = cl if not isinstance(cl, str) else self.__clsdict.get(cl)
-        if cl:
-            return {k: v for k, v in self.__objects.items()
-                    if isinstance(v, cl)}
-        return self.__objects
+    @classmethod
+    def register_class(cls, klass):
+        cls.__class_dictionary[klass.__name__] = klass
+
+    @classmethod
+    def all(cls, klass=None):
+        if klass:
+            return {k: v for k, v in cls.__objects.items() if isinstance(v, klass)}
+        return cls.__objects
 
     def new(self, obj):
         """Sets in __objects the obj with key <obj class name>.id."""
@@ -40,6 +33,7 @@ class FileStorage:
 
     def save(self):
         """Serializes __objects to the JSON file."""
+        serialized_objects = {}
         serialized_objects = {key: obj.to_dict()
                               for key, obj in self.__objects.items()}
         with open(self.__file_path, 'w') as f:

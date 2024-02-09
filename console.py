@@ -2,6 +2,11 @@
 import cmd
 from models.base_model import BaseModel
 from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 from models import storage
 from shlex import split
 
@@ -15,7 +20,12 @@ class HBNBCommand(cmd.Cmd):
 
     classes = {
         "BaseModel": BaseModel,
-        "User": User
+        "User": User,
+        "State": State,
+        "City": City,
+        "Amenity": Amenity,
+        "Place": Place,
+        "Review": Review
     }
 
     def do_create(self, arg):
@@ -117,21 +127,15 @@ class HBNBCommand(cmd.Cmd):
         """Prints all string representations of instances.
         Args:
             arg (str): The arguments passed with the command."""
-        try:
-            class_name = self.parse_line(line)
-            objects = storage.all()
-
-            if class_name:
-                objects = {k: v for k, v in objects.items() if class_name in k}
-
-            if not objects:
-                print("**  no instance found **")
-                return
-
-            print([str(obj) for obj in objects.values()])
-
-        except NameError:
+        args = line.split()
+        if len(args) == 0:
+            print([str(obj) for obj in storage.all().values()])
+            return
+        if args[0] not in self.classes:
             print("** class doesn't exist **")
+            return
+        print([str(obj) for obj in storage.all(self.classes[args[0]]).values()])
+
 
     def parse_line(self, line):
         """Parses the line into class name."""
@@ -180,31 +184,6 @@ class HBNBCommand(cmd.Cmd):
             print("** attribute name missing **")
         except ValueError:
             print("** value missing **")
-
-    def parse_update_line(self, line):
-        """Parses the line into class name, object ID, attribute, and value."""
-        if not line:
-            raise SyntaxError()
-
-        args = line.split(" ")
-        if len(args) < 4:
-            raise SyntaxError()
-
-        class_name, obj_id, attribute, value = args[0], args[1], args[2], args[3]
-
-        if class_name not in self.classes:
-            raise NameError("** class doesn't exist **")
-
-        if not obj_id:
-            raise IndexError("** instance id missing **")
-
-        if not attribute:
-            raise AttributeError("** attribute name missing **")
-
-        if not value:
-            raise ValueError("** value missing **")
-
-        return class_name, obj_id, attribute, value
 
     def emptyline(self):
         """
