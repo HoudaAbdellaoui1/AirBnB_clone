@@ -212,7 +212,15 @@ class HBNBCommand(cmd.Cmd):
         ENTER without typing anything.
         """
         pass
+    
+    def do_quit(self, arg):
+        """Quit command to exit the program"""
+        return True
 
+    def do_EOF(self, arg):
+        """Handles EOF (Ctrl+D) to exit the program"""
+        print("")  # New line for better formatting
+        return True
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
