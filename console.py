@@ -15,18 +15,27 @@ class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) '
 
     def do_create(self, arg):
-        """
-        Creates a new instance of BaseModel and saves it to the JSON file.
+        """Creates a new instance of BaseModel 
+        and saves it to the JSON file.
 
         Args:
             arg (str): The argument passed with the command.
-
-        Usage:
-            create <class name>
         """
-        if not arg:
-            print("** class name missing **")
-            return
+        try:
+            if not arg:
+                raise SyntaxError()
+            list = arg.split(" ")
+            object = eval("{}()".format(list[0]))
+            for i in range(1, len(list)):
+                param = self.validate(list[i])
+                if param:
+                    object.__dict__[param[0]] = param[0]
+            object.save()
+            print("{}".format(object.id))
+        except SyntaxError:
+            print('** class name missing **')
+        except NameError:
+            print("** class doesn't exist **")
 
         try:
             new_instance = eval(arg)()
@@ -34,6 +43,25 @@ class HBNBCommand(cmd.Cmd):
             print(new_instance.id)
         except NameError:
             print("** class doesn't exist **")
+
+    def validate(self, arg):
+        """validate parameter and returns 
+        either None or a tuple"""
+        
+        if "=" not in arg:
+            return None
+
+        args = arg.split("=")
+        param, value = args[0], args[1]
+        try:
+            value = eval(args[1])
+        except Exception:
+            return None
+
+        if isinstance(value, str):
+            value = value.replace("_", " ")
+
+        return param, value
 
     def do_show(self, arg):
         """
