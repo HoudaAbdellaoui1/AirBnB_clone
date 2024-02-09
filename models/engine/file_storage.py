@@ -8,6 +8,7 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 
+
 class FileStorage:
     """Class for serializing instances to a JSON file
     and deserializing JSON file to instances."""
@@ -23,7 +24,8 @@ class FileStorage:
     @classmethod
     def all(cls, klass=None):
         if klass:
-            return {k: v for k, v in cls.__objects.items() if isinstance(v, klass)}
+            return {k: v for k, v in cls.__objects.items()
+                     if isinstance(v, klass)}
         return cls.__objects
 
     def new(self, obj):
@@ -35,25 +37,22 @@ class FileStorage:
         """Serializes __objects to the JSON file."""
         serialized_objects = {}
         serialized_objects = {key: obj.to_dict()
-                              for key, obj in self.__objects.items()}
+                            for key, obj in self.__objects.items()}
         with open(self.__file_path, 'w') as f:
             json.dump(serialized_objects, f)
 
     def reload(self):
-            """
-            Deserializes the JSON file to __objects.
-
-            If the JSON file exists, it loads the data into __objects.
-            Otherwise, do nothing.
-            """
-            try:
-                with open(self.__file_path, 'r', encoding="UTF-8") as f:
-                    serialized_objects = json.load(f)
-                    for key, value in serialized_objects.items():
-                        class_name = value["__class__"]
-                        cls = self.__classDictionary.get(class_name)
-                        if cls:
-                            obj = cls(**value)
-                            self.__objects[key] = obj
-            except FileNotFoundError:
-                pass
+        """Deserializes the JSON file to __objects.
+        If the JSON file exists, it loads the data into __objects.
+        Otherwise, do nothing."""
+        try:
+            with open(self.__file_path, 'r', encoding="UTF-8") as f:
+                serialized_objects = json.load(f)
+                for key, value in serialized_objects.items():
+                    class_name = value["__class__"]
+                    cls = self.__classDictionary.get(class_name)
+                    if cls:
+                        obj = cls(**value)
+                        self.__objects[key] = obj
+        except FileNotFoundError:
+            pass

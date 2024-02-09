@@ -134,8 +134,8 @@ class HBNBCommand(cmd.Cmd):
         if args[0] not in self.classes:
             print("** class doesn't exist **")
             return
-        print([str(obj) for obj in storage.all(self.classes[args[0]]).values()])
-
+        print([str(obj) for obj in storage.all(self
+                                               .classes[args[0]]).values()])
 
     def parse_line(self, line):
         """Parses the line into class name."""
@@ -193,7 +193,7 @@ class HBNBCommand(cmd.Cmd):
         ENTER without typing anything.
         """
         pass
-    
+
     def do_quit(self, arg):
         """Quit command to exit the program"""
         return True
@@ -202,6 +202,7 @@ class HBNBCommand(cmd.Cmd):
         """Handles EOF (Ctrl+D) to exit the program"""
         print("")  # New line for better formatting
         return True
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
