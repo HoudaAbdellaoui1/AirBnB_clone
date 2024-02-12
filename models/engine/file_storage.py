@@ -25,7 +25,7 @@ class FileStorage:
     def all(cls, klass=None):
         if klass:
             return {k: v for k, v in cls.__objects.items()
-                     if isinstance(v, klass)}
+                    if isinstance(v, klass)}
         return cls.__objects
 
     def new(self, obj):
@@ -36,8 +36,8 @@ class FileStorage:
     def save(self):
         """Serializes __objects to the JSON file."""
         serialized_objects = {}
-        serialized_objects = {key: obj.to_dict()
-                            for key, obj in self.__objects.items()}
+        serialized_objects = {
+            key: obj.to_dict() for key, obj in self.__objects.items()}
         with open(self.__file_path, 'w') as f:
             json.dump(serialized_objects, f)
 
@@ -56,4 +56,3 @@ class FileStorage:
                         self.__objects[key] = obj
         except FileNotFoundError:
             pass
-

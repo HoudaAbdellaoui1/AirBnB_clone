@@ -4,7 +4,7 @@ from models.user import User
 
 
 class TestUser(unittest.TestCase):
-    
+
     @classmethod
     def setUpClass(cls):
         """set up for test"""
