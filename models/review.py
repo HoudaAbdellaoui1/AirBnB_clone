@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+"""Review class Model"""
 from models.base_model import BaseModel
 
 
