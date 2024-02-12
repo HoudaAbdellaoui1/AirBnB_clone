@@ -9,8 +9,5 @@ class TestCity(unittest.TestCase):
         self.assertEqual(city.state_id, "")
         self.assertEqual(city.name, "")
 
-    # Add more test cases as needed
-
-
 if __name__ == '__main__':
     unittest.main()
