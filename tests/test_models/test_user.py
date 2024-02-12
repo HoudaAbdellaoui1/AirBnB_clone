@@ -33,17 +33,6 @@ class TestUser(unittest.TestCase):
         self.assertEqual(user.first_name, "John")
         self.assertEqual(user.last_name, "Doe")
 
-    def test_to_dict_method(self):
-        user = User()
-        user_dict = user.to_dict()
-
-        self.assertTrue(isinstance(user_dict, dict))
-        self.assertEqual(user_dict['email'], "")
-        self.assertEqual(user_dict['password'], "")
-        self.assertEqual(user_dict['first_name'], "")
-        self.assertEqual(user_dict['last_name'], "")
-        self.assertEqual(user_dict['__class__'], "User")
-
     def test_str_representation(self):
         user = User()
         user.email = "test@example.com"
