@@ -1,5 +1,17 @@
 header {
-    background-color: #FF0000;
+    background-color: white;
+    border-bottom: #CCCCCC solid 1px;
     height: 70px;
     width: 100%;
+    align-items: center;
+    display: flex;
+}
+
+.logo {
+    width: 142px;
+    height: 60px;
+    background-image: url('../images/logo.png');
+    margin-right: 20px;
+    background-size: cover;
+    background-position: center;
 }
