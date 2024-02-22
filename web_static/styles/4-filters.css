@@ -17,9 +17,7 @@
     width: 20%;
     border: none;
     border-radius: 4px;
-    opacity: 90%;
     cursor: pointer;
-    transition: opacity 0.3s;
 }
 .filters button:hover{
     opacity: 0.9;
