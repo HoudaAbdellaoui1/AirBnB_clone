@@ -35,6 +35,7 @@
     width: 100%;
     height: 100px;
     margin-top: -15px;
+    margin-bottom: 10px;
 }
 
 .price_by_night p {
@@ -114,6 +115,7 @@ li {
 }
 .places > .amenities > ul, li{
     display: flex;
+    vertical-align: middle;
 }
 .places .amenities {
     margin-top: 40px;
@@ -125,8 +127,19 @@ li {
     font-size: 16px;
     border-bottom: 1px solid #DDDDDD;
     text-align: left;
+    margin-right: 30px;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
 }
 
+.amenity {
+    display: flex;
+}
+
+.amenity > span {
+    margin-top: 7px;
+    margin-left: 10px; 
+}
 .pet_friendly {
     width: 30px;
     height: 30px;
@@ -149,4 +162,31 @@ li {
     background-image: url('../images/icon_wifi.png');
     background-size: cover;
     background-position: center;
+}
+.reviews {
+    margin-top: 40px;
+    width: 100%;
+}
+.reviews h2 {
+    font-size: 16px;
+    border-bottom: 1px solid #DDDDDD;
+    text-align: left;
+    margin-left: 20px;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+.reviews ul, li{
+    list-style-type: none;
+}
+.reviews h3 {
+    font-size: 14px;
+}
+.reviews p {
+    font-size: 12px;
+    padding-top: 7px;
+}
+.review {
+    text-align: left;
+    margin-left: 20px;
+    margin-bottom: 20px;
 }
